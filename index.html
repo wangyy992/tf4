@@ -1,129 +1,166 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>认人挑战</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 420px;
+            width: 100%;
             text-align: center;
-            margin: 40px;
-            background: #f5f5f5
         }
 
         img {
-            max-width: 300px;
-            border-radius: 8px;
-            margin: 20px 0;
-            box-shadow: 0 0 10px #aaa
+            max-width: 280px;
+            border-radius: 15px;
+            margin: 10px 0 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         input {
-            padding: 10px;
-            width: 220px;
-            font-size: 16px
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: #5b8def;
         }
 
         button {
-            padding: 10px 20px;
-            margin: 10px;
+            background: #5b8def;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
             font-size: 16px;
-            cursor: pointer
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #4a7bdf;
         }
 
         .result {
-            font-size: 18px;
+            margin-top: 20px;
+            font-size: 17px;
             font-weight: bold;
-            margin: 10px 0
+            min-height: 25px;
         }
 
         .correct {
-            color: green
+            color: #27ae60;
         }
 
         .wrong {
-            color: red
+            color: #e74c3c;
+        }
+
+        .answer {
+            color: #e74c3c;
+            font-size: 18px;
+            margin-top: 8px;
         }
 
         .score {
-            font-size: 20px;
-            color: #0066cc;
-            margin-top: 30px
+            margin-top: 25px;
+            font-size: 16px;
+            color: #5b8def;
+            font-weight: bold;
+        }
+
+        .finish-box {
+            text-align: center;
+        }
+
+        .finish-box h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .finish-box p {
+            color: #7f8c8d;
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .finish-box button {
+            margin-top: 25px;
+            background: #5b8def;
         }
     </style>
 </head>
 
 <body>
-    <h1>认人挑战</h1>
-    <div id="game"></div>
+    <h1 class="title">认人挑战</h1>
+    <p class="subtitle">看看你能认出多少人～</p>
+
+    <div class="card">
+        <div id="game"></div>
+    </div>
+
     <div class="score" id="score"></div>
 
     <script>
-        // ==============================================
-        // 在这里替换成你的图片链接和答案
-        // ==============================================
         const questions = [
-            {
-                img: "images/官俊臣.jpg",
-                ans: "官俊臣"
-            },
-            {
-                img: "images/左奇函.jpg",
-                ans: "左奇函"
-            },
-            {
-                img: "images/杨博文.jpg",
-                ans: "杨博文"
-            }
-            {
-                img: "images/王橹杰.jpg",
-                ans: "王橹杰"
-            },
-            {
-                img: "images/陈奕恒.jpg",
-                ans: "陈奕恒"
-            },
-            {
-                img: "images/陈浚铭.jpg",
-                ans: "陈浚铭"
-            }
-            {
-                img: "images/张奕然.jpg",
-                ans: "张奕然"
-            },
-            {
-                img: "images/张函瑞.jpg",
-                ans: "张函瑞"
-            },
-            {
-                img: "images/李嘉森.jpg",
-                ans: "李嘉森"
-            }
-            {
-                img: "images/杨涵博.jpg",
-                ans: "杨涵博"
-            },
-            {
-                img: "images/魏子宸.jpg",
-                ans: "魏子宸"
-            },
-            {
-                img: "images/陈思罕.jpg",
-                ans: "陈思罕"
-            }
-                    {
-                img: "images/李煜东.jpg",
-                ans: "李煜东"
-            },
-            {
-                img: "images/张桂源.jpg",
-                ans: "张桂源"
-            },
-            {
-                img: "images/聂玮辰.jpg",
-                ans: "聂玮辰"
-                    
+            { img: "images/官俊臣.jpg", ans: "官俊臣" },
+            { img: "images/左奇函.jpg", ans: "左奇函" },
+            { img: "images/杨博文.jpg", ans: "杨博文" },
+            { img: "images/王橹杰.jpg", ans: "王橹杰" },
+            { img: "images/陈奕恒.jpg", ans: "陈奕恒" },
+            { img: "images/陈浚铭.jpg", ans: "陈浚铭" },
+            { img: "images/张奕然.jpg", ans: "张奕然" },
+            { img: "images/张函瑞.jpg", ans: "张函瑞" },
+            { img: "images/李嘉森.jpg", ans: "李嘉森" },
+            { img: "images/杨涵博.jpg", ans: "杨涵博" },
+            { img: "images/魏子宸.jpg", ans: "魏子宸" },
+            { img: "images/陈思罕.jpg", ans: "陈思罕" },
+            { img: "images/李煜东.jpg", ans: "李煜东" },
+            { img: "images/张桂源.jpg", ans: "张桂源" },
+            { img: "images/聂玮辰.jpg", ans: "聂玮辰" }
         ];
 
         let current = 0;
@@ -133,50 +170,53 @@
             if (current >= questions.length) {
                 const rate = ((correct / questions.length) * 100).toFixed(1);
                 document.getElementById("game").innerHTML = `
-       <h2>挑战结束！</h2>
-       <p>答对：${correct} 题，共 ${questions.length} 题</p>
-       <p>正确率：${rate}%</p>
-       <button onclick="location.reload()">再来一次</button>
-     `;
+                <div class="finish-box">
+                    <h2>🎉 挑战完成！</h2>
+                    <p>答对：${correct} 题</p>
+                    <p>总共：${questions.length} 题</p>
+                    <p>正确率：${rate}%</p>
+                    <button onclick="location.reload()">再来一次</button>
+                </div>`;
                 document.getElementById("score").innerText = "";
                 return;
             }
 
             const q = questions[current];
             document.getElementById("game").innerHTML = `
-     <img src="${q.img}" alt="人物">
-     <br>
-     <input type="text" id="input" placeholder="输入名字" autocomplete="off">
-     <button onclick="check()">提交答案</button>
-     <div id="tip"></div>
-   `;
-            document.getElementById("score").innerText =
-                `进度：${current + 1}/${questions.length}`;
+            <img src="${q.img}" alt="人物">
+            <input type="text" id="input" placeholder="请输入名字" autocomplete="off">
+            <button onclick="check()">提交答案</button>
+            <div id="tip" class="result"></div>
+            <div id="showAnswer" class="answer"></div>
+            `;
+
+            document.getElementById("score").innerText = `📝 进度：${current + 1}/${questions.length}`;
         }
 
         function check() {
             const user = document.getElementById("input").value.trim();
             const ans = questions[current].ans.trim();
             const tip = document.getElementById("tip");
+            const showAns = document.getElementById("showAnswer");
 
             if (user === ans) {
                 tip.className = "result correct";
                 tip.innerText = "✅ 回答正确！";
+                showAns.innerText = "";
                 correct++;
             } else {
                 tip.className = "result wrong";
-                tip.innerText = "❌ 回答错误，正确答案：" + ans;
+                tip.innerText = "❌ 回答错误";
+                showAns.innerText = "正确答案：" + ans;
             }
 
             setTimeout(() => {
                 current++;
                 render();
-            }, 1200);
+            }, 1500);
         }
 
-        // 开始游戏
         render();
     </script>
 </body>
-
 </html>
