@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>认人挑战</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+            background: #f5f5f5
+        }
+
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px #aaa
+        }
+
+        input {
+            padding: 10px;
+            width: 220px;
+            font-size: 16px
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0
+        }
+
+        .correct {
+            color: green
+        }
+
+        .wrong {
+            color: red
+        }
+
+        .score {
+            font-size: 20px;
+            color: #0066cc;
+            margin-top: 30px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>认人挑战</h1>
+    <div id="game"></div>
+    <div class="score" id="score"></div>
+
+    <script>
+        // ==============================================
+        // 在这里替换成你的图片链接和答案
+        // ==============================================
+        const questions = [
+            {
+                img: "images/官俊臣.jpg",
+                ans: "官俊臣"
+            },
+            {
+                img: "images/左奇函.jpg",
+                ans: "左奇函"
+            },
+            {
+                img: "images/杨博文.jpg",
+                ans: "杨博文"
+            }
+            {
+                img: "images/王橹杰.jpg",
+                ans: "王橹杰"
+            },
+            {
+                img: "images/陈奕恒.jpg",
+                ans: "陈奕恒"
+            },
+            {
+                img: "images/陈浚铭.jpg",
+                ans: "陈浚铭"
+            }
+            {
+                img: "images/张奕然.jpg",
+                ans: "张奕然"
+            },
+            {
+                img: "images/张函瑞.jpg",
+                ans: "张函瑞"
+            },
+            {
+                img: "images/李嘉森.jpg",
+                ans: "李嘉森"
+            }
+            {
+                img: "images/杨涵博.jpg",
+                ans: "杨涵博"
+            },
+            {
+                img: "images/魏子宸.jpg",
+                ans: "魏子宸"
+            },
+            {
+                img: "images/陈思罕.jpg",
+                ans: "陈思罕"
+            }
+                    {
+                img: "images/李煜东.jpg",
+                ans: "李煜东"
+            },
+            {
+                img: "images/张桂源.jpg",
+                ans: "张桂源"
+            },
+            {
+                img: "images/聂玮辰.jpg",
+                ans: "聂玮辰"
+                    
+        ];
+
+        let current = 0;
+        let correct = 0;
+
+        function render() {
+            if (current >= questions.length) {
+                const rate = ((correct / questions.length) * 100).toFixed(1);
+                document.getElementById("game").innerHTML = `
+       <h2>挑战结束！</h2>
+       <p>答对：${correct} 题，共 ${questions.length} 题</p>
+       <p>正确率：${rate}%</p>
+       <button onclick="location.reload()">再来一次</button>
+     `;
+                document.getElementById("score").innerText = "";
+                return;
+            }
+
+            const q = questions[current];
+            document.getElementById("game").innerHTML = `
+     <img src="${q.img}" alt="人物">
+     <br>
+     <input type="text" id="input" placeholder="输入名字" autocomplete="off">
+     <button onclick="check()">提交答案</button>
+     <div id="tip"></div>
+   `;
+            document.getElementById("score").innerText =
+                `进度：${current + 1}/${questions.length}`;
+        }
+
+        function check() {
+            const user = document.getElementById("input").value.trim();
+            const ans = questions[current].ans.trim();
+            const tip = document.getElementById("tip");
+
+            if (user === ans) {
+                tip.className = "result correct";
+                tip.innerText = "✅ 回答正确！";
+                correct++;
+            } else {
+                tip.className = "result wrong";
+                tip.innerText = "❌ 回答错误，正确答案：" + ans;
+            }
+
+            setTimeout(() => {
+                current++;
+                render();
+            }, 1200);
+        }
+
+        // 开始游戏
+        render();
+    </script>
+</body>
+
+</html>
