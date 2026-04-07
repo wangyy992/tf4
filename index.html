@@ -127,6 +127,13 @@
             margin: 8px 0;
         }
 
+        .finish-box .comment {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 12px 0;
+            color: #e74c3c;
+        }
+
         .finish-box button {
             margin-top: 25px;
             background: #5b8def;
@@ -145,7 +152,6 @@
     <div class="score" id="score"></div>
 
     <script>
-        // 题目列表
         const questions = [
             { img: "images/官俊臣.jpg", ans: "官俊臣" },
             { img: "images/左奇函.jpg", ans: "左奇函" },
@@ -164,7 +170,7 @@
             { img: "images/聂玮辰.jpg", ans: "聂玮辰" }
         ];
 
-        // ✅ 随机打乱顺序（核心代码）
+        // 随机打乱
         function shuffle(arr) {
             let newArr = [...arr];
             for (let i = newArr.length - 1; i > 0; i--) {
@@ -174,19 +180,31 @@
             return newArr;
         }
 
-        let shuffledQuestions = shuffle(questions); // 随机后的题目
+        let shuffledQuestions = shuffle(questions);
         let current = 0;
         let correct = 0;
 
         function render() {
             if (current >= shuffledQuestions.length) {
                 const rate = ((correct / shuffledQuestions.length) * 100).toFixed(1);
+                let comment = "";
+
+                // ✅ 你要的评价逻辑
+                if (rate < 50) {
+                    comment = "对掏4一窍不通";
+                } else if (rate < 90) {
+                    comment = "掏与不掏之间";
+                } else {
+                    comment = "看来掏的很认真";
+                }
+
                 document.getElementById("game").innerHTML = `
                 <div class="finish-box">
                     <h2>🎉 挑战完成！</h2>
                     <p>答对：${correct} 题</p>
                     <p>总共：${shuffledQuestions.length} 题</p>
                     <p>正确率：${rate}%</p>
+                    <p class="comment">${comment}</p>
                     <button onclick="location.reload()">再来一次</button>
                 </div>`;
                 document.getElementById("score").innerText = "";
