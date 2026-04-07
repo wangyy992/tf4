@@ -1,3 +1,19 @@
+// 访问统计
+function getViews() {
+  let views = localStorage.getItem('site_views') || 0;
+  views = Number(views) + 1;
+  localStorage.setItem('site_views', views);
+  return views;
+}
+
+// 查看统计：网址后加 ?view 即可查看
+if (location.search.includes('view')) {
+  alert('总访问次数：' + (localStorage.getItem('site_views') || 0));
+}
+
+// 每次打开自动计数
+getViews();
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
