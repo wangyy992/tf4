@@ -145,6 +145,7 @@
     <div class="score" id="score"></div>
 
     <script>
+        // 题目列表
         const questions = [
             { img: "images/官俊臣.jpg", ans: "官俊臣" },
             { img: "images/左奇函.jpg", ans: "左奇函" },
@@ -163,17 +164,28 @@
             { img: "images/聂玮辰.jpg", ans: "聂玮辰" }
         ];
 
+        // ✅ 随机打乱顺序（核心代码）
+        function shuffle(arr) {
+            let newArr = [...arr];
+            for (let i = newArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+            }
+            return newArr;
+        }
+
+        let shuffledQuestions = shuffle(questions); // 随机后的题目
         let current = 0;
         let correct = 0;
 
         function render() {
-            if (current >= questions.length) {
-                const rate = ((correct / questions.length) * 100).toFixed(1);
+            if (current >= shuffledQuestions.length) {
+                const rate = ((correct / shuffledQuestions.length) * 100).toFixed(1);
                 document.getElementById("game").innerHTML = `
                 <div class="finish-box">
                     <h2>🎉 挑战完成！</h2>
                     <p>答对：${correct} 题</p>
-                    <p>总共：${questions.length} 题</p>
+                    <p>总共：${shuffledQuestions.length} 题</p>
                     <p>正确率：${rate}%</p>
                     <button onclick="location.reload()">再来一次</button>
                 </div>`;
@@ -181,7 +193,7 @@
                 return;
             }
 
-            const q = questions[current];
+            const q = shuffledQuestions[current];
             document.getElementById("game").innerHTML = `
             <img src="${q.img}" alt="人物">
             <input type="text" id="input" placeholder="请输入名字" autocomplete="off">
@@ -190,12 +202,12 @@
             <div id="showAnswer" class="answer"></div>
             `;
 
-            document.getElementById("score").innerText = `📝 进度：${current + 1}/${questions.length}`;
+            document.getElementById("score").innerText = `📝 进度：${current + 1}/${shuffledQuestions.length}`;
         }
 
         function check() {
             const user = document.getElementById("input").value.trim();
-            const ans = questions[current].ans.trim();
+            const ans = shuffledQuestions[current].ans.trim();
             const tip = document.getElementById("tip");
             const showAns = document.getElementById("showAnswer");
 
